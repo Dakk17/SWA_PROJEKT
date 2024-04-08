@@ -1,6 +1,6 @@
 # SWA_PROJEKT
 
-Jednoduchý to-do list
+#Jednoduchý to-do list
 Tento projekt je jednoduchá webová aplikace pro správu úkolů, která umožňuje uživatelům vytvářet seznam úkolů, upravovat je, označovat jako dokončené a mazat. Je navržen tak, aby byl snadno použitelný a zároveň účinný pro správu denních úkolů.
 
 Funkce
