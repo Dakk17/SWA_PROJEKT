@@ -1,0 +1,25 @@
+*{
+    padding: 0; 
+    margin: 0;
+}
+
+.LeftColumn{
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    width: 50px;
+    background-color: gray;
+}
+.LeftColumn li{
+    display: grid;
+}
+
+.Sidebar{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: gray;
+}
