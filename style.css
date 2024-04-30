@@ -1,7 +1,7 @@
 *{
     padding: 0; 
     margin: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Segoe","Segoe UI","Arial","sans-serif";
 }
 
 .Window{
@@ -47,10 +47,10 @@
 
 .LeftColumn {   
     background-color: white;
-    box-shadow: 1px 0px 4px rgb(159, 156, 156);
+    box-shadow: 1px 0px 4px rgb(212, 211, 211);
     display: fixed;
     height: 100vh;
-    width: 290px;
+    width: 350px;
     overflow: auto;
 }
 
@@ -74,11 +74,73 @@
 }
 
 .Sidebar li a:active{
-    background-color: rgb(124, 198, 238);
+    /* background-color: rgb(124, 198, 238); */
+    color: black;
+}
+
+.Sidebar li a:visited{
+    color: black;
+    font-weight: bold;
+    background-color: rgba(124, 198, 238, 0.15);
 }
 
 .CenterColumn{
     width: 100vw;
     height: 100vh;
     background-color: rgb(255, 255, 255);
+    box-shadow: 1px 0px 4px rgb(159, 156, 156);
+}
+
+.toolBar{
+    margin: 16px 24px;
+    height: 80px;
+    display: grid;
+}
+
+.inputConteiner{
+    margin: 0 24px 0 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputWrap{
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    height: 50px;
+    border-radius:4px ;
+    box-shadow: 0px 1px 4px rgb(185, 184, 184);
+}
+
+.inputConteiner input{
+    padding:16px 14px;
+    border: none;
+    outline: none;
+    margin: auto 20px auto 20px;
+    height: 40px;
+    font-size: 0.85rem;
+    line-height: 20px;
+}
+
+.toolBar-Top{
+    /* display: flex;
+    justify-content: center; */
+}
+
+.Title{
+    display: flex;
+    min-width: 20px;
+    max-width: 175px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.25rem;
+    font-weight: 500;
+    padding: 6px 8px;
+    align-items: center;
+}
+
+.Title span{
+    margin-left: 10px;
 }
