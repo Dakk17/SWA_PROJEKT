@@ -75,7 +75,7 @@
 
 .Sidebar li a:active{
     /* background-color: rgb(124, 198, 238); */
-    color: black;
+    color: rgb(0, 0, 0);
 }
 
 .Sidebar li a:visited{
@@ -106,11 +106,29 @@
 
 .inputWrap{
     position: relative;
-    flex-direction: column;
+    flex-direction: row;
     display: flex;
     height: 50px;
     border-radius:4px ;
     box-shadow: 0px 1px 4px rgb(185, 184, 184);
+}
+
+#ukolInput{
+    flex-grow: 1;
+}
+
+#submitButton{
+    font-size: 0.75rem;
+    font-weight: bold;
+    background-color: rgb(248, 217, 149);
+    border-radius: 50px;
+    margin: 10px;
+    width:60px;
+    border: 0.5px solid ;
+}
+
+#submitButton:active{
+    background-color: rgb(241, 193, 89);
 }
 
 .inputConteiner input{
@@ -123,7 +141,7 @@
     line-height: 20px;
 }
 
-.toolBar-Top{
+.toolBar-Top{ 
     /* display: flex;
     justify-content: center; */
 }
@@ -144,3 +162,18 @@
 .Title span{
     margin-left: 10px;
 }
+
+
+/* .submitWrap{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    background-color: rgb(235, 235, 235);
+}
+
+.submitButton{
+    position: absolute;
+    display: flex;
+    justify-content: right;
+} */
+
