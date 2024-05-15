@@ -1,5 +1,5 @@
 # SWA_PROJEKT
-# https://dakk17.github.io/SWA_PROJEKT.github.io/
+https://dakk17.github.io/SWA_PROJEKT.github.io/
 
 # Jednoduchý to-do list
 
