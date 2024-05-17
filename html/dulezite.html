@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>To Do - Důležité </title>
+</head>
+<body>
+    <div class="Topbar">
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+          </a>
+        <p>To Do</p>
+    </div>
+    <div class="Window">
+        <div class="LeftColumn" id="SideBarContent">
+            <div class="Sidebar" id="SideBarContent">
+                <ul>
+                    <li><a href="../index.html">Můj den</a></li>
+                    <li><a href="../html/archiv.html">Archiv</a></li>
+                    <li><a href="../html/dulezite.html">Důležité</a></li>
+                    <li><a href="../html/dokoncene.html">Dokončené</a></li>
+                    <li><a href="../html/nedokoncene.html">Nedokončene</a></li>
+                    <li><a href="../html/seznam.html">Seznam</a></li>
+                    <li><a href="../html/ukoly.html">Úkoly</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="CenterColumn">
+            <div class="mainConteiner">
+                <div class="toolBar">
+                    <div class="toolBar-Top">
+                        <div class="Title">
+                            <svg class="fluentIcon listTitle-icon ___12fm75w f1w7gpdv fez10in fg4l7m0" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c.41 0 .75.34.75.75v1.5a.75.75 0 01-1.5 0v-1.5c0-.41.34-.75.75-.75zm0 15a5 5 0 100-10 5 5 0 000 10zm0-1.5a3.5 3.5 0 110-7 3.5 3.5 0 010 7zm9.25-2.75a.75.75 0 000-1.5h-1.5a.75.75 0 000 1.5h1.5zM12 19c.41 0 .75.34.75.75v1.5a.75.75 0 01-1.5 0v-1.5c0-.41.34-.75.75-.75zm-7.75-6.25a.75.75 0 000-1.5h-1.5a.75.75 0 000 1.5h1.5zm-.03-8.53c.3-.3.77-.3 1.06 0l1.5 1.5a.75.75 0 01-1.06 1.06l-1.5-1.5a.75.75 0 010-1.06zm1.06 15.56a.75.75 0 11-1.06-1.06l1.5-1.5a.75.75 0 111.06 1.06l-1.5 1.5zm14.5-15.56a.75.75 0 00-1.06 0l-1.5 1.5a.75.75 0 001.06 1.06l1.5-1.5c.3-.3.3-.77 0-1.06zm-1.06 15.56a.75.75 0 101.06-1.06l-1.5-1.5a.75.75 0 10-1.06 1.06l1.5 1.5z" fill="currentColor"></path></svg>
+                            <span>Důležité</span>                                                       
+                        </div>
+                    </div>
+                </div>
+                <div class="inputConteiner">
+                    <div class="inputWrap">
+                        <label class="checkbox-container" id="checkBox">
+                            <input class="custom-checkbox" type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <input id="ukolInput" type="text">
+                        <button id="submitButton">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg> Přidat
+                        </span>
+                        </button>
+                    </div>
+                    
+                    <!-- <div class="submitWrap">
+                        <div class="submitButton">
+                            <button>
+                                KYsd
+                            </button>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>
