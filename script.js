@@ -58,8 +58,23 @@ function addTask(taskContent) {
     var checkmark = document.createElement('span');
     checkmark.className = 'checkmark';
 
+    var dulezitostDivMark = document.createElement('div');
+    dulezitostDivMark.className = 'dulezitostMark'; 
+
+    var checkboxLabel2 = document.createElement('label');
+    checkboxLabel2.className = 'checkbox-container taskCheckbox';
+
+    var checkbox2 = document.createElement('input');
+    checkbox2.type = 'checkbox';
+    checkbox2.className = 'custom-checkbox';
+
+    var checkmark2 = document.createElement('span');
+    checkmark2.className = 'checkmark2';
+
     checkboxLabel.appendChild(checkbox);
     checkboxLabel.appendChild(checkmark);
+    checkboxLabel2.appendChild(checkbox2);
+    checkboxLabel2.appendChild(checkmark2);
 
     var taskText = document.createElement('div');
     taskText.className = 'taskContent';
@@ -68,6 +83,8 @@ function addTask(taskContent) {
     inputWrap.appendChild(checkboxLabel);
     inputWrap.appendChild(taskText);
     taskContainer.appendChild(inputWrap);
+    inputWrap.appendChild(dulezitostDivMark);
+    dulezitostDivMark.appendChild(checkboxLabel2);
 
     document.getElementById('tasksContainer').appendChild(taskContainer);
 }

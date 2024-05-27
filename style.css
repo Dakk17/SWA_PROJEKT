@@ -178,7 +178,7 @@
     cursor: pointer;
     font-size: 16px;
     user-select: none;
-    width: 50px;
+    min-width: 50px;
   }
   
   .custom-checkbox {
@@ -202,6 +202,19 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     margin: 10px;  
   }
+
+  .checkmark2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border: solid rgb(255, 0, 0) 1px;
+    border-radius: 15px;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin: 10px;  
+  }
   
   .checkmark:after {
     content: "";
@@ -216,12 +229,34 @@
     transform: rotate(45deg);
   }
   
+  .checkmark2:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+
   .custom-checkbox:checked ~ .checkmark {
     background-color: orange;
     box-shadow: 0 3px 7px rgba(33, 150, 243, 0.3);
   }
   
   .custom-checkbox:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  .custom-checkbox:checked ~ .checkmark2 {
+    background-color: rgb(255, 0, 0);
+    box-shadow: 0 3px 7px rgba(33, 150, 243, 0.3);
+  }
+  
+  .custom-checkbox:checked ~ .checkmark2:after {
     display: block;
   }
   
@@ -259,6 +294,7 @@
 }
 
 .taskContent {
+    width: 100%;
     flex-grow: 1;
     text-align: center;
     display: flex;
@@ -304,5 +340,17 @@
     min-width: 300px;
     padding: 14 14 14 14px;
     box-shadow: 0px 0px 2px rgb(185, 184, 184);
+}
+
+.dulezitostMark{
+    flex-grow: 1;
+    text-align: center;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    min-width: 300px;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 14 0 14px;
 }
 
