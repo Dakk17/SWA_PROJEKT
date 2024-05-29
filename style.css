@@ -353,4 +353,13 @@
     justify-content: flex-start;
     padding: 0 14 0 14px;
 }
+.completed .taskContent {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.important .taskContent {
+    font-weight: bold;
+    color: red;
+}
 
