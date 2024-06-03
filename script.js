@@ -1,12 +1,10 @@
+// Přepínání viditelnosti bočního panelu
 function myFunction() {
   var x = document.getElementById("SideBarContent");
-  if (x.style.display === "block") {
-      x.style.display = "none";
-  } else {
-      x.style.display = "block";
-  }
+  x.style.display = (x.style.display === "block") ? "none" : "block";
 }
 
+// Přidání event listeneru pro tlačítko "Přidat"
 document.getElementById('submitButton').addEventListener('click', function() {
   var input = document.getElementById('ukolInput').value;
   if (input.trim() !== "") {
@@ -15,43 +13,17 @@ document.getElementById('submitButton').addEventListener('click', function() {
   }
 });
 
+// Funkce pro přidání úkolu
 function addTask(taskContent, isCompleted = false, isImportant = false, skipSave = false) {
-  // Kontrola, zda se nacházíme na stránce Dokončené nebo Důležité
   var isCompletedPage = window.location.pathname.includes('dokoncene.html');
   var isImportantPage = window.location.pathname.includes('dulezite.html');
 
-  // Pokud jsme na stránce Dokončené nebo Důležité, přeskočíme uložení do localStorage
   if (isCompletedPage || isImportantPage) {
       skipSave = true;
   }
 
   var taskContainer = document.createElement('div');
   taskContainer.className = 'taskItem';
-
-  if (!document.querySelector('.tasksHeader') && !(isCompletedPage || isImportantPage)) {
-      var tasksHeader = document.createElement('div');
-      tasksHeader.className = 'tasksHeader';
-
-      var firstInputWrap = document.createElement('div');
-      firstInputWrap.className = 'taskWrap';
-
-      var firstTaskText = document.createElement('div');
-      firstTaskText.className = 'taskContent';
-      firstTaskText.textContent = 'Název';
-
-      var span = document.createElement('span');
-      span.className = 'inputSpan';
-
-      var dulezitostDiv = document.createElement('div');
-      dulezitostDiv.className = 'dulezitost';
-      dulezitostDiv.textContent = "Důležitost"
-
-      tasksContainer.appendChild(tasksHeader);
-      tasksHeader.appendChild(span);
-      tasksHeader.appendChild(firstInputWrap);
-      tasksHeader.appendChild(dulezitostDiv);
-      firstInputWrap.appendChild(firstTaskText);
-  }
 
   var inputWrap = document.createElement('div');
   inputWrap.className = 'taskWrap';
@@ -103,11 +75,9 @@ function addTask(taskContent, isCompleted = false, isImportant = false, skipSave
   }
 }
 
+// Funkce pro uložení úkolu do localStorage
 function saveTask(taskContent, isCompleted, isImportant) {
-  // Získání aktuální URL
   var currentPage = window.location.pathname;
-
-  // Pokud jsme na stránce Dokončené nebo Důležité, nepřidáme žádné úkoly
   if (currentPage.includes('dokoncene.html') || currentPage.includes('dulezite.html')) {
       return;
   }
@@ -116,22 +86,20 @@ function saveTask(taskContent, isCompleted, isImportant) {
   tasks.push({ taskContent, isCompleted, isImportant });
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
+
+// Funkce pro načtení úkolů z localStorage
 function loadTasks() {
-    // Získání aktuální URL
-    var currentPage = window.location.pathname;
+  var currentPage = window.location.pathname;
 
-    // Pokud jsme na stránce Dokončené nebo Důležité, nepřidáme žádné úkoly
-    if (currentPage.includes('dokoncene.html') || currentPage.includes('dulezite.html')) {
-        // Skryjeme container pro úkoly
-        document.getElementById('tasksContainer').style.display = 'none';
-        return;
-    }
+  if (currentPage.includes('dokoncene.html') || currentPage.includes('dulezite.html')) {
+      document.getElementById('tasksContainer').style.display = 'none';
+      return;
+  }
 
-    // Pokud jsme na jiné stránce než Dokončené nebo Důležité, načteme úkoly
-    var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.forEach(task => {
-        addTask(task.taskContent, task.isCompleted, task.isImportant, true);
-    });
+  var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.forEach(task => {
+      addTask(task.taskContent, task.isCompleted, task.isImportant, true);
+  });
 }
 
 // Načtení úkolů při načtení stránky
@@ -139,37 +107,30 @@ window.addEventListener('load', function() {
   loadTasks();
 });
 
+// Funkce pro přesunutí úkolu do kategorie "Dokončené"
 function moveToCompleted(taskContent) {
-  // Přidat úkol do kategorie "Dokončené"
   addTask(taskContent, true, false, false);
 }
 
 // Funkce pro přesunutí úkolu do kategorie "Důležité"
 function moveToImportant(taskContent) {
-  // Přidat úkol do kategorie "Důležité"
   addTask(taskContent, false, true, false);
 }
 
 // Event listener pro žluté tlačítko
 document.getElementById('yellowButton').addEventListener('click', function() {
-  // Získání textu úkolu
   var taskContent = document.getElementById('ukolInput').value;
   if (taskContent.trim() !== "") {
-      // Přesunutí úkolu do kategorie "Dokončené"
       moveToCompleted(taskContent);
-      // Vyprázdnění pole pro nový úkol
       document.getElementById('ukolInput').value = "";
   }
 });
 
 // Event listener pro červené tlačítko
 document.getElementById('redButton').addEventListener('click', function() {
-  // Získání textu úkolu
   var taskContent = document.getElementById('ukolInput').value;
   if (taskContent.trim() !== "") {
-      // Přesunutí úkolu do kategorie "Důležité"
       moveToImportant(taskContent);
-      // Vyprázdnění pole pro nový úkol
       document.getElementById('ukolInput').value = "";
   }
 });
