@@ -1,7 +1,7 @@
 # SWA_PROJEKT
 GitHub stránky: https://dakk17.github.io/SWA_PROJEKT.github.io/
 
-InfinityFree stránky: https://todoprojectfinal.infinityfreeapp.com ----> (je možné že nefungují správně)
+InfinityFree stránky: http://todoprojectfinal.infinityfreeapp.com ----> (je možné že nefungují správně)
 
 
 # Jednoduchý to-do list
