@@ -1,3 +1,9 @@
+// Přepínání viditelnosti bočního panelu
+function myFunction() {
+  var x = document.getElementById("SideBarContent");
+  x.style.display = (x.style.display === "block") ? "none" : "block";
+}
+
 // Přidání event listeneru pro tlačítko "Přidat"
 document.getElementById('taskForm').addEventListener('submit', function(event) {
   event.preventDefault(); // Zabraňuje výchozímu chování formuláře
@@ -10,7 +16,7 @@ document.getElementById('taskForm').addEventListener('submit', function(event) {
 });
 
 function addTask(taskContent, isCompleted = false, isImportant = false, skipSave = false) {
-  var isCompletedPage = window.location.pathname.includes('dokoncene.html');
+  var isCompletedPage = window.location.pathname.includes('html/dokoncene.html');
   var isImportantPage = window.location.pathname.includes('dulezite.html');
 
   if (isCompletedPage || isImportantPage) {
@@ -69,6 +75,19 @@ function addTask(taskContent, isCompleted = false, isImportant = false, skipSave
   checkbox2.type = 'checkbox';
   checkbox2.className = 'custom-checkbox';
   checkbox2.checked = isImportant;
+  checkbox2.id = 'loadImportantTasksCheckbox'; // Přidání identifikátoru
+
+  // Přidání tlačítka do stránky až po vytvoření tasksContainer
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('tasksContainer').appendChild(checkbox2);
+
+    // Přidání event listeneru pro tlačítko načtení důležitých úkolů
+    document.getElementById('loadImportantTasksCheckbox').addEventListener('change', function() {
+        if (this.checked) {
+            loadImportantTasks();
+        }
+    });
+  });
 
   var checkmark2 = document.createElement('span');
   checkmark2.className = 'checkmark2';
@@ -78,10 +97,29 @@ function addTask(taskContent, isCompleted = false, isImportant = false, skipSave
   checkboxLabel2.appendChild(checkbox2);
   checkboxLabel2.appendChild(checkmark2);
 
+  // Přidání event listeneru pro checkbox pro dokončení úkolu
+  checkbox.addEventListener('change', function() {
+      var isChecked = this.checked;
+      var taskContent = this.parentNode.nextElementSibling.textContent; // Získání textu úkolu
+
+      if (isChecked) {
+          markTaskAsCompleted(taskContent);
+      }
+  });
+
+  // Přidání event listeneru pro checkbox pro označení úkolu jako důležitý
+  checkbox2.addEventListener('change', function() {
+      var isChecked = this.checked;
+      var taskText = taskContainer.querySelector('.taskContent').textContent;
+
+      if (isChecked) {
+          markTaskAsImportant(taskText);
+      }
+  });
+
   var taskText = document.createElement('div');
   taskText.className = 'taskContent';
   taskText.textContent = taskContent;
-
 
   inputWrap.appendChild(checkboxLabel);
   inputWrap.appendChild(taskText);
@@ -92,40 +130,58 @@ function addTask(taskContent, isCompleted = false, isImportant = false, skipSave
   document.getElementById('tasksContainer').appendChild(taskContainer);
 
   if (!skipSave) {
-      saveTask(taskContent, isCompleted, isImportant);
+      saveTaskToLocalStorage(taskContent, isCompleted, isImportant);
   }
 }
 
-function saveTask(taskContent, isCompleted, isImportant) {
-  var currentPage = window.location.pathname;
-  if (currentPage.includes('dokoncene.html') || currentPage.includes('dulezite.html')) {
-      return;
-  }
 
-  // Uložení do localStorage
-  saveTaskToLocalStorage(taskContent, isCompleted, isImportant);
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'php/database.php', true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          console.log('Task saved to JSON successfully');
+function markTaskAsCompleted(taskContent) {
+  // Aktualizace úkolu jako dokončeného a přesměrování na stránku dokoncene.html
+  var tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+  tasks.forEach(task => {
+      if (task.taskContent === taskContent) {
+          task.isCompleted = true;
       }
-  };
-  var data = 'taskContent=' + encodeURIComponent(taskContent) + 
-             '&isCompleted=' + encodeURIComponent(isCompleted) + 
-             '&isImportant=' + encodeURIComponent(isImportant);
-  xhr.send(data);
+  })
+  location.reload();
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  // window.location.href = "html/dokoncene.html";
+}
+
+function markTaskAsImportant(taskContent) {
+  // Aktualizace úkolu jako důležitého
+  var tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+  tasks.forEach(task => {
+      if (task.taskContent === taskContent) {
+          task.isImportant = true;
+      }
+  });
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function loadTasksFromLocalStorage() {
+  var currentPage = window.location.pathname;
+  var tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+
+  tasks.forEach(task => {
+      var shouldAddTask = true;
+      if (currentPage.includes('html/dokoncene.html') && !task.isCompleted) {
+          shouldAddTask = false;
+      }
+      if (currentPage.includes('dulezite.html') && !task.isImportant) {
+          shouldAddTask = false;
+      }
+      if (currentPage.includes('nedokoncene.html') && task.isCompleted) {
+          shouldAddTask = false;
+      }
+      if (shouldAddTask) {
+          addTask(task.taskContent, task.isCompleted, task.isImportant, true);
+      }
+  });
 }
 
 function loadTasksFromJSON() {
   var currentPage = window.location.pathname;
-
-  if (currentPage.includes('dokoncene.html') || currentPage.includes('dulezite.html')) {
-      document.getElementById('tasksContainer').style.display = 'none';
-      return;
-  }
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'php/database.php', true);
@@ -140,37 +196,101 @@ function loadTasksFromJSON() {
   xhr.send();
 }
 
-window.addEventListener('load', function() {
-  // loadTasksFromJSON();
-});
-
-// Funkce pro uložení stavu úkolu do localStorage
 function saveTaskToLocalStorage(taskContent, isCompleted, isImportant) {
-  var task = {
-    taskContent: taskContent,
-    isCompleted: isCompleted,
-    isImportant: isImportant
-  };
   var tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
-  tasks.push(task);
+  tasks.push({ taskContent, isCompleted, isImportant });
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Funkce pro načtení úkolů z localStorage
-function loadTasksFromLocalStorage() {
+// Načtení úkolů při načtení stránky
+window.onload = loadTasksFromLocalStorage;
+
+document.getElementById('loadTasksFromJSONCheckbox').addEventListener('change', function() {
+  if (this.checked) {
+      loadTasksFromJSON();
+  }
+});
+
+function loadImportantTasks() {
   var currentPage = window.location.pathname;
 
-  if (currentPage.includes('dokoncene.html') || currentPage.includes('dulezite.html')) {
+  if (currentPage.includes('dokoncene.html') || currentPage.includes('nedokoncene.html') || currentPage.includes('seznam.html') || currentPage.includes('ukoly.html')) {
       document.getElementById('tasksContainer').style.display = 'none';
       return;
   }
-  var tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
-  tasks.forEach(task => {
-    addTask(task.taskContent, task.isCompleted, task.isImportant, true);
-  });
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'php/important_tasks.php', true);
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var tasks = JSON.parse(xhr.responseText);
+          tasks.forEach(task => {
+              addTask(task.taskContent, task.isCompleted, task.isImportant, true);
+          });
+      }
+  };
+  xhr.send();
 }
 
-// Načtení úkolů z localStorage po načtení stránky
-window.addEventListener('load', function() {
-  loadTasksFromLocalStorage();
+// Přidání event listeneru pro tlačítko načtení důležitých úkolů
+document.getElementById('loadImportantTasksCheckbox').addEventListener('change', function() {
+  if (this.checked) {
+      loadImportantTasks();
+  }
 });
+
+// Přidání event listeneru pro tlačítko "Přidat"
+document.getElementById('taskForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Zabraňuje výchozímu chování formuláře
+  
+  var input = document.getElementById('ukolInput').value;
+  if (input.trim() !== "") {
+      addTask(input);
+      document.getElementById('ukolInput').value = "";
+
+      // Odeslat nový úkol na server
+      saveTaskToServer(input);      
+  }
+});
+
+// Funkce pro odeslání nového úkolu na server
+function saveTaskToServer(taskContent) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'php/database.php', true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+              console.log('Úkol byl úspěšně uložen na server.');
+          } else {
+              console.error('Chyba při ukládání úkolu na server.');
+          }
+      }
+  };
+  var formData = new FormData();
+  formData.append('taskContent', taskContent);
+  xhr.send(formData);
+}
+
+// Načtení úkolů při načtení stránky
+window.onload = function() {
+  var currentPage = window.location.pathname;
+  if (currentPage.includes('html/team.html')) {
+      loadTasksFromServer();
+  }
+};
+
+// Funkce pro načtení úkolů ze serveru
+function loadTasksFromServer() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'php/database.php?page=html/team.html', true);
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          var tasks = JSON.parse(xhr.responseText);
+          tasks.forEach(task => {
+              addTask(task.taskContent, task.isCompleted, task.isImportant, true);
+          });
+      }
+  };
+  xhr.send();
+}
