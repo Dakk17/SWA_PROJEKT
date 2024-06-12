@@ -19,7 +19,7 @@
             <div class="Sidebar" id="SideBarContent">
                 <ul>
                     <li><a href="index.php">Můj den</a></li>
-                    <li><a href="../html/dulezite.html">Důležité</a></li>
+                    <li><a href="html/dulezite.html">Důležité</a></li>
                     <li><a href="html/dokoncene.html">Dokončené</a></li>
                     <li><a href="html/nedokoncene.html">Nedokončene</a></li>
                     <li><a href="html/seznam.html">Seznam</a></li>
