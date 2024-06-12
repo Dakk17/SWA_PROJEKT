@@ -180,21 +180,21 @@ function loadTasksFromLocalStorage() {
   });
 }
 
-function loadTasksFromJSON() {
-  var currentPage = window.location.pathname;
+// function loadTasksFromJSON() {
+//   var currentPage = window.location.pathname;
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'php/database.php', true);
-  xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          var tasks = JSON.parse(xhr.responseText);
-          tasks.forEach(task => {
-              addTask(task.taskContent, task.isCompleted, task.isImportant, true);
-          });
-      }
-  };
-  xhr.send();
-}
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('GET', 'php/database.php', true);
+//   xhr.onreadystatechange = function() {
+//       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+//           var tasks = JSON.parse(xhr.responseText);
+//           tasks.forEach(task => {
+//               addTask(task.taskContent, task.isCompleted, task.isImportant, true);
+//           });
+//       }
+//   };
+//   xhr.send();
+// }
 
 function saveTaskToLocalStorage(taskContent, isCompleted, isImportant) {
   var tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
@@ -254,23 +254,23 @@ document.getElementById('taskForm').addEventListener('submit', function(event) {
 });
 
 // Funkce pro odeslání nového úkolu na server
-function saveTaskToServer(taskContent) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'php/database.php', true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-              console.log('Úkol byl úspěšně uložen na server.');
-          } else {
-              console.error('Chyba při ukládání úkolu na server.');
-          }
-      }
-  };
-  var formData = new FormData();
-  formData.append('taskContent', taskContent);
-  xhr.send(formData);
-}
+// function saveTaskToServer(taskContent) {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('POST', 'php/database.php', true);
+//   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//   xhr.onreadystatechange = function() {
+//       if (xhr.readyState === XMLHttpRequest.DONE) {
+//           if (xhr.status === 200) {
+//               console.log('Úkol byl úspěšně uložen na server.');
+//           } else {
+//               console.error('Chyba při ukládání úkolu na server.');
+//           }
+//       }
+//   };
+//   var formData = new FormData();
+//   formData.append('taskContent', taskContent);
+//   xhr.send(formData);
+// }
 
 // Načtení úkolů při načtení stránky
 window.onload = function() {
@@ -281,16 +281,35 @@ window.onload = function() {
 };
 
 // Funkce pro načtení úkolů ze serveru
-function loadTasksFromServer() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'php/database.php?page=html/team.html', true);
-  xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          var tasks = JSON.parse(xhr.responseText);
-          tasks.forEach(task => {
-              addTask(task.taskContent, task.isCompleted, task.isImportant, true);
-          });
-      }
-  };
-  xhr.send();
-}
+// function loadTasksFromServer() {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('GET', 'php/database.php?page=html/team.html', true);
+//   xhr.onreadystatechange = function() {
+//       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+//           var tasks = JSON.parse(xhr.responseText);
+//           tasks.forEach(task => {
+//               addTask(task.taskContent, task.isCompleted, task.isImportant, true);
+//           });
+//       }
+//   };
+//   xhr.send();
+// }
+
+$(document).ready(function() {
+    $("#contactForm").on("submit", function(event) {
+        event.preventDefault(); // Zamezí standardnímu odeslání formuláře
+
+        $.ajax({
+            url: '/php/database.php',
+            type: 'post',
+            data: $(this).serialize(),
+            success: function(response) {
+                $(".result").html(response);
+            },
+            error: function(xhr, status, error) {
+                $(".result").html("Došlo k chybě: " + error);
+            }
+        });
+    });
+});
+

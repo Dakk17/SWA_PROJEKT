@@ -363,3 +363,53 @@
     color: red;
 }
 
+
+.FormBox{
+    box-shadow: 0px 1px 4px rgb(185, 184, 184);
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    display: flex;
+    margin: 50px;
+    height: 500px;
+} 
+
+.FormInBox{
+    margin: 15px;
+    justify-content: center;
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.FormInBox textarea{
+    margin-top:5px ;
+    resize: none;
+    height: 150px;
+    width: 500px;
+}
+
+.FormContainer{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sumButton{
+    border: 2px solid orange;
+    background-color: orange;
+    border-radius: 0.9em;
+    padding: 0.2em 0.6em 0.2em 0.4em;
+    transition: all ease-in-out 0.2s;
+    font-size: 11px;
+    text-align: center;
+    margin: 10px;
+    width: 60px;
+    cursor: pointer;
+}
+
+.sumButton:hover{
+    background-color: rgb(233, 154, 8);
+}

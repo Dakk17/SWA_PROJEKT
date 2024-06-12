@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>To Do - Team </title>
+</head>
+<body>
+    <div class="Topbar">
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+          </a>
+        <p>To Do</p>
+    </div>
+    <div class="Window">
+        <div class="LeftColumn" id="SideBarContent" style="display: block;">
+            <div class="Sidebar" id="SideBarContent">
+                <ul>
+                    <li><a href="../index.html">Můj den</a></li>
+                    <li><a href="../html/dulezite.html">Důležité</a></li>
+                    <li><a href="../html/dokoncene.html">Dokončené</a></li>
+                    <li><a href="../html/nedokoncene.html">Nedokončene</a></li>
+                    <li><a href="../html/ukoly.html">Úkoly</a></li>
+                    <li><a href="../html/form.html">Report</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="CenterColumn">
+            <div class="mainConteiner">
+                <div class="FormBox">
+                    <form id="contactForm">
+                        <div class="FormInBox">
+                            <label for="name">Jméno:</label>
+                            <input type="text" id="name" name="name">
+                        </div>
+                        <div class="FormInBox">
+                            <label for="email">E-mail:</label>
+                            <input type="text" id="email" name="email">
+                        </div>
+                        <div class="FormInBox">
+                            <label for="error_description">Popis chyby:</label>
+                            <textarea id="error_description" name="error_description" rows="5"></textarea>
+                        </div>
+                        <div class="FormInBox">
+                            <input type="submit" name="submit" value="Odeslat" class="sumButton">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
