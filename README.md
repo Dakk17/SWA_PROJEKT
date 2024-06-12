@@ -3,6 +3,8 @@ GitHub stránky: https://dakk17.github.io/SWA_PROJEKT.github.io/
 
 InfinityFree stránky: http://todoprojectfinal.infinityfreeapp.com ----> (je možné že nefungují správně)
 
+PowerPoint: https://sstebrnocz-my.sharepoint.com/:p:/g/personal/58803hanzlik_student_sstebrno_cz/EXy0hh_Z21lEtR0-wPgCNXYBb-90gnVZN-qdSqov-J5u2g?e=1HQrDZ
+
 
 # Jednoduchý to-do list
 
